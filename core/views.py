@@ -14,57 +14,93 @@ def formulario_view(request):
         if form.is_valid():
             cd = form.cleaned_data
 
-            # --- Generar el DOCX en memoria ---
+            # 1) Carga de la plantilla
             tpl_path = settings.BASE_DIR / 'core' / 'plantillas' / 'reporte.docx'
             doc = DocxTemplate(tpl_path)
 
-            # Contexto de texto
+            # 2) Contexto de texto
             context = {
-                'fecha': cd['fecha'],
-                'nombre': cd['nombre'],
-                'parque': cd['parque'],
-                # ... otros campos ...
+                'fecha':                   cd['fecha'],
+                'nombre':                  cd['nombre'],
+                'parque':                  cd['parque'],
+
+                'inspeccion_compacto':     cd['inspeccion_compacto'],
+                'comentario_compacto':     cd.get('comentario_compacto', ''),
+
+                'inspeccion_reconectador': cd['inspeccion_reconectador'],
+                'comentario_reconectador': cd.get('comentario_reconectador', ''),
+
+                'inspeccion_medidor':      cd['inspeccion_medidor'],
+                'comentario_medidor':      cd.get('comentario_medidor', ''),
+
+                'inspeccion_sala_control': cd['inspeccion_sala_control'],
+                'comentario_sala_control': cd.get('comentario_sala_control', ''),
+
+                'inspeccion_linea_mt':     cd['inspeccion_linea_mt'],
+                'comentario_linea_mt':     cd.get('comentario_linea_mt', ''),
+
+                'inspeccion_ct':           cd['inspeccion_ct'],
+                'comentario_ct':           cd.get('comentario_ct', ''),
+
+                'inspeccion_inversores':   cd['inspeccion_inversores'],
+                'comentario_inversores':   cd.get('comentario_inversores', ''),
+
+                'inspeccion_modulos':      cd['inspeccion_modulos'],
+                'comentario_modulos':      cd.get('comentario_modulos', ''),
+
+                'nivel_soiling':           cd['nivel_soiling'],
+                'comentarios_supervisor':  cd.get('comentarios_supervisor', ''),
             }
 
-            # Helper para imágenes
-            def mkimg(name):
-                f = cd.get(name)
-                if not f: return None
-                img = Image.open(f)
-                img.thumbnail((120*11.8, 105*11.8))
+            # 3) Helper para imágenes a 120×105 mm
+            def mkimg(field_name):
+                uploaded = cd.get(field_name)
+                if not uploaded:
+                    return None
+                img = Image.open(uploaded)
+                # Convertir mm→px (≈11.8 px/mm a 300 dpi)
+                max_w_px = int(120 * 11.8)
+                max_h_px = int(105 * 11.8)
+                img.thumbnail((max_w_px, max_h_px))
                 bio = BytesIO()
-                img.save(bio, format=img.format or 'PNG')
+                fmt = img.format or 'PNG'
+                img.save(bio, format=fmt)
                 bio.seek(0)
                 return InlineImage(doc, bio, width=Mm(120), height=Mm(105))
 
-            # Añade las imágenes al contexto (ejemplo)
+            # 4) Inserción de imágenes principales (incluye soiling)
             context.update({
-                'imagen_ecm': mkimg('imagen_ecm'),
-                # ... resto de campos imagen ...
+                'imagen_ecm':            mkimg('imagen_ecm'),
+                'imagen_reconectador':   mkimg('imagen_reconectador'),
+                'imagen_medidor':        mkimg('imagen_medidor'),
+                'imagen_sala_control':   mkimg('imagen_sala_control'),
+                'imagen_linea_mt':       mkimg('imagen_linea_mt'),
+                'imagen_ct':             mkimg('imagen_ct'),
+                'imagen_inversores':     mkimg('imagen_inversores'),
+                'imagen_modulos':        mkimg('imagen_modulos'),
+                'imagen_soiling':        mkimg('imagen_soiling'),
             })
 
-            # Fotos adicionales
-            fotos = [mkimg(f'foto_adicional_{i}') for i in range(1,11) if cd.get(f'foto_adicional_{i}')]
+            # 5) Fotos adicionales (hasta 10)
+            fotos = []
+            for i in range(1, 11):
+                img_f = mkimg(f'foto_adicional_{i}')
+                if img_f:
+                    fotos.append(img_f)
             context['foto_adicional'] = fotos
 
-            # Render y guarda a buffer
+            # 6) Render del DOCX en memoria
             doc.render(context)
             buf = BytesIO()
             doc.save(buf)
             buf.seek(0)
             report_bytes = buf.getvalue()
 
-            # --- Enviar email ---
+            # 7) Envío de email
             subject = f"Reporte inspección {cd['parque']} realizado por {cd['nombre']}"
             body = "Reporte adjunto"
             to = ['nicolas.maruri@aedilestalinay.com']
-
-            email = EmailMessage(
-                subject=subject,
-                body=body,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=to,
-            )
+            email = EmailMessage(subject, body, settings.DEFAULT_FROM_EMAIL, to)
             email.attach(
                 filename=f"informe_{cd['parque']}.docx",
                 content=report_bytes,
@@ -72,13 +108,13 @@ def formulario_view(request):
             )
             email.send(fail_silently=False)
 
-            # --- Devolver el .docx para descarga también si quieres ---
-            resp = HttpResponse(
+            # 8) Devolver el .docx para descarga
+            response = HttpResponse(
                 report_bytes,
                 content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             )
-            resp['Content-Disposition'] = 'attachment; filename="informe_reporte.docx"'
-            return resp
+            response['Content-Disposition'] = f'attachment; filename="informe_{cd["parque"]}.docx"'
+            return response
 
     else:
         form = ReporteForm()
