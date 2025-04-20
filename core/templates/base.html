@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Aediles – Generar Informe{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <!-- Cabecera -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="#" class="logo">
+        <img src="{% static 'images/aediles_logo.png' %}" alt="Aediles">
+      </a>
+      <nav class="main-nav">
+        <a href="#" class="active">Inicio</a>
+        <a href="#">Reportes</a>
+        <a href="#">O&M</a>
+        <a href="#">Contacto</a>
+      </nav>
+      <div class="user-info">
+        Bienvenido(a), {{ nombre }}
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido -->
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
