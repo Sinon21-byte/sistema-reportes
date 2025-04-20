@@ -28,17 +28,39 @@
 
     <hr>
 
-    <!-- Inspecciones y Comentarios -->
+    <!-- Resto de campos: inspecciones, comentarios e imágenes -->
     {% for field in form.visible_fields %}
-      {% if field.name not in 'fecha nombre parque' %}
-        <div class="form-group">
-          {{ field.label_tag }}
-          {{ field|add_class:"form-control" }}
-          {{ field.errors }}
-        </div>
-      {% endif %}
+      <div class="form-group">
+        {{ field.label_tag }}
+        {{ field|add_class:"form-control" }}
+        {{ field.errors }}
+      </div>
     {% endfor %}
 
     <button type="submit" class="btn-primary">Generar Informe</button>
   </form>
+
+  <script>
+    // En móviles: antes de abrir el file-picker, pregunto Cámara o Galería
+    document.addEventListener('DOMContentLoaded', function() {
+      const fileInputs = document.querySelectorAll('input[type=file]');
+      fileInputs.forEach(function(input) {
+        input.addEventListener('click', function(ev) {
+          // Sólo en móvil y con accept="image/*"
+          if (input.accept.includes('image')) {
+            ev.preventDefault();
+            const useCamera = confirm(
+              '¿Deseas tomar una foto nueva? Pulsa OK para Cámara, Cancel para Galería.'
+            );
+            if (useCamera) {
+              input.setAttribute('capture', 'environment');
+            } else {
+              input.removeAttribute('capture');
+            }
+            input.click();
+          }
+        });
+      });
+    });
+  </script>
 {% endblock %}
