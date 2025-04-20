@@ -3,11 +3,11 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'tu-secret-key'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'tu-secret-key')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'sistema-reportes-021i.onrender.com',  # tu dominio de Render
+    'sistema-reportes-021i.onrender.com',
     '127.0.0.1',
     'localhost',
 ]
@@ -18,7 +18,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # WhiteNoise debe ir antes de cualquier middleware que sirva archivos estáticos
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -48,19 +47,22 @@ DATABASES = {
 
 # ——— Archivos estáticos ———
 STATIC_URL = '/static/'
-
-# Le decimos a Django dónde están tus assets de desarrollo
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'core' / 'static',
 ]
-
-# Carpeta donde collectstatic volcará los archivos en producción
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Almacenamiento optimizado de WhiteNoise (compressed + cache busting)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ——— Media (uploads temporales) ———
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# ——— Email (SMTP) ———
+EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST          = os.environ.get('EMAIL_HOST', 'smtp.office365.com')
+EMAIL_PORT          = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS       = True  # STARTTLS on port 587
+EMAIL_HOST_USER     = os.environ['EMAIL_HOST_USER']       # p.ej. 'nicolas.maruri@aedilestalinay.com'
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']   # establecido en Environment de Render
+DEFAULT_FROM_EMAIL  = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@aedilestalinay.com')
