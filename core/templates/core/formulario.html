@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load form_tags %}
 
 {% block title %}Generar Reporte – Aediles{% endblock %}
@@ -9,7 +10,7 @@
     {% csrf_token %}
     {{ form.non_field_errors }}
 
-    {% comment %} Render todos los campos explícitamente para evitar omisiones {% endcomment %}
+    <!-- Metadatos -->
     <div class="form-group">
       {{ form.fecha.label_tag }}
       {{ form.fecha|add_class:"form-control" }}
@@ -33,7 +34,7 @@
 
     <hr>
 
-    <!-- Ahora listamos uno a uno para asegurar que todos estén -->
+    <!-- Inspecciones -->
     <div class="form-group">
       {{ form.inspeccion_compacto.label_tag }}
       {{ form.inspeccion_compacto|add_class:"form-control" }}
@@ -174,13 +175,56 @@
     </div>
 
     <h3>Fotos Adicionales</h3>
-    {% for i in 1|to:10 %}
-      <div class="form-group">
-        {{ form['foto_adicional_'|add:i].label_tag }}
-        {{ form['foto_adicional_'|add:i]|add_class:"form-control" }}
-        {{ form['foto_adicional_'|add:i].errors }}
-      </div>
-    {% endfor %}
+    <div class="form-group">
+      {{ form.foto_adicional_1.label_tag }}
+      {{ form.foto_adicional_1|add_class:"form-control" }}
+      {{ form.foto_adicional_1.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_2.label_tag }}
+      {{ form.foto_adicional_2|add_class:"form-control" }}
+      {{ form.foto_adicional_2.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_3.label_tag }}
+      {{ form.foto_adicional_3|add_class:"form-control" }}
+      {{ form.foto_adicional_3.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_4.label_tag }}
+      {{ form.foto_adicional_4|add_class:"form-control" }}
+      {{ form.foto_adicional_4.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_5.label_tag }}
+      {{ form.foto_adicional_5|add_class:"form-control" }}
+      {{ form.foto_adicional_5.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_6.label_tag }}
+      {{ form.foto_adicional_6|add_class:"form-control" }}
+      {{ form.foto_adicional_6.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_7.label_tag }}
+      {{ form.foto_adicional_7|add_class:"form-control" }}
+      {{ form.foto_adicional_7.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_8.label_tag }}
+      {{ form.foto_adicional_8|add_class:"form-control" }}
+      {{ form.foto_adicional_8.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_9.label_tag }}
+      {{ form.foto_adicional_9|add_class:"form-control" }}
+      {{ form.foto_adicional_9.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.foto_adicional_10.label_tag }}
+      {{ form.foto_adicional_10|add_class:"form-control" }}
+      {{ form.foto_adicional_10.errors }}
+    </div>
 
     <div class="form-group">
       {{ form.comentarios_supervisor.label_tag }}
