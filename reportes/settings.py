@@ -3,6 +3,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Seguridad
 SECRET_KEY = os.environ.get('SECRET_KEY', 'tu-secret-key')
 DEBUG = False
 
@@ -12,17 +13,20 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
+# Aplicaciones
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
 ]
 
+# Middleware
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'reportes.urls'
 
+# Plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -36,7 +40,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'reportes.wsgi.application'
 
-# ——— Base de datos SQLite interna ———
+# Base de datos interna
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {
     'default': {
@@ -45,7 +49,7 @@ DATABASES = {
     }
 }
 
-# ——— Archivos estáticos ———
+# Archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
@@ -54,15 +58,15 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# ——— Media (uploads temporales) ———
+# Media (uploads temporales)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ——— Email (SMTP) ———
+# Configuración de correo (SMTP) vía variables de entorno
 EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST          = os.environ.get('EMAIL_HOST', 'smtp.office365.com')
 EMAIL_PORT          = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USE_TLS       = True  # STARTTLS on port 587
-EMAIL_HOST_USER     = os.environ['EMAIL_HOST_USER']       # p.ej. 'nicolas.maruri@aedilestalinay.com'
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']   # establecido en Environment de Render
+EMAIL_USE_TLS       = True
+EMAIL_HOST_USER     = os.environ.get('EMAIL_HOST_USER', 'nicolas.maruri@aedilestalinay.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL  = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@aedilestalinay.com')
