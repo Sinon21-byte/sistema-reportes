@@ -3,21 +3,18 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Aediles – Generar Informe{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Aediles – Generar Reporte{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <!-- Cabecera -->
   <header class="main-header">
     <div class="header-container">
       <a href="#" class="logo">
-        <img src="{% static 'images/aediles_logo.png' %}" alt="Aediles">
+        <img src="{% static 'images/aediles_logo.png' %}" alt="Aediles" height="40">
       </a>
       <nav class="main-nav">
         <a href="#" class="active">Inicio</a>
-        <a href="#">Reportes</a>
-        <a href="#">O&M</a>
-        <a href="#">Contacto</a>
       </nav>
       <div class="user-info">
         Bienvenido(a), {{ nombre }}
@@ -25,7 +22,6 @@
     </div>
   </header>
 
-  <!-- Contenido -->
   <div class="container">
     {% block content %}{% endblock %}
   </div>
