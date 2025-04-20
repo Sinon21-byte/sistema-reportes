@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% load form_tags %}
 
+{% block title %}Generar Reporte – Aediles{% endblock %}
+
 {% block content %}
   <h1>Generar Reporte</h1>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.non_field_errors }}
 
-    <!-- Metadatos -->
+    {% comment %} Render todos los campos explícitamente para evitar omisiones {% endcomment %}
     <div class="form-group">
       {{ form.fecha.label_tag }}
       {{ form.fecha|add_class:"form-control" }}
@@ -23,8 +25,6 @@
       {{ form.parque|add_class:"form-control" }}
       {{ form.parque.errors }}
     </div>
-
-    <!-- NUEVO: destinatario opcional -->
     <div class="form-group">
       {{ form.destinatario.label_tag }}
       {{ form.destinatario|add_class:"form-control" }}
@@ -33,16 +33,160 @@
 
     <hr>
 
-    <!-- Resto de campos… -->
-    {% for field in form.visible_fields %}
-      {% if field.name not in 'fecha nombre parque destinatario' %}
-        <div class="form-group">
-          {{ field.label_tag }}
-          {{ field|add_class:"form-control" }}
-          {{ field.errors }}
-        </div>
-      {% endif %}
+    <!-- Ahora listamos uno a uno para asegurar que todos estén -->
+    <div class="form-group">
+      {{ form.inspeccion_compacto.label_tag }}
+      {{ form.inspeccion_compacto|add_class:"form-control" }}
+      {{ form.inspeccion_compacto.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_compacto.label_tag }}
+      {{ form.comentario_compacto|add_class:"form-control" }}
+      {{ form.comentario_compacto.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_ecm.label_tag }}
+      {{ form.imagen_ecm|add_class:"form-control" }}
+      {{ form.imagen_ecm.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_reconectador.label_tag }}
+      {{ form.inspeccion_reconectador|add_class:"form-control" }}
+      {{ form.inspeccion_reconectador.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_reconectador.label_tag }}
+      {{ form.comentario_reconectador|add_class:"form-control" }}
+      {{ form.comentario_reconectador.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_reconectador.label_tag }}
+      {{ form.imagen_reconectador|add_class:"form-control" }}
+      {{ form.imagen_reconectador.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_medidor.label_tag }}
+      {{ form.inspeccion_medidor|add_class:"form-control" }}
+      {{ form.inspeccion_medidor.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_medidor.label_tag }}
+      {{ form.comentario_medidor|add_class:"form-control" }}
+      {{ form.comentario_medidor.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_medidor.label_tag }}
+      {{ form.imagen_medidor|add_class:"form-control" }}
+      {{ form.imagen_medidor.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_sala_control.label_tag }}
+      {{ form.inspeccion_sala_control|add_class:"form-control" }}
+      {{ form.inspeccion_sala_control.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_sala_control.label_tag }}
+      {{ form.comentario_sala_control|add_class:"form-control" }}
+      {{ form.comentario_sala_control.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_sala_control.label_tag }}
+      {{ form.imagen_sala_control|add_class:"form-control" }}
+      {{ form.imagen_sala_control.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_linea_mt.label_tag }}
+      {{ form.inspeccion_linea_mt|add_class:"form-control" }}
+      {{ form.inspeccion_linea_mt.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_linea_mt.label_tag }}
+      {{ form.comentario_linea_mt|add_class:"form-control" }}
+      {{ form.comentario_linea_mt.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_linea_mt.label_tag }}
+      {{ form.imagen_linea_mt|add_class:"form-control" }}
+      {{ form.imagen_linea_mt.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_ct.label_tag }}
+      {{ form.inspeccion_ct|add_class:"form-control" }}
+      {{ form.inspeccion_ct.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_ct.label_tag }}
+      {{ form.comentario_ct|add_class:"form-control" }}
+      {{ form.comentario_ct.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_ct.label_tag }}
+      {{ form.imagen_ct|add_class:"form-control" }}
+      {{ form.imagen_ct.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_inversores.label_tag }}
+      {{ form.inspeccion_inversores|add_class:"form-control" }}
+      {{ form.inspeccion_inversores.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_inversores.label_tag }}
+      {{ form.comentario_inversores|add_class:"form-control" }}
+      {{ form.comentario_inversores.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_inversores.label_tag }}
+      {{ form.imagen_inversores|add_class:"form-control" }}
+      {{ form.imagen_inversores.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.inspeccion_modulos.label_tag }}
+      {{ form.inspeccion_modulos|add_class:"form-control" }}
+      {{ form.inspeccion_modulos.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.comentario_modulos.label_tag }}
+      {{ form.comentario_modulos|add_class:"form-control" }}
+      {{ form.comentario_modulos.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_modulos.label_tag }}
+      {{ form.imagen_modulos|add_class:"form-control" }}
+      {{ form.imagen_modulos.errors }}
+    </div>
+
+    <div class="form-group">
+      {{ form.nivel_soiling.label_tag }}
+      {{ form.nivel_soiling|add_class:"form-control" }}
+      {{ form.nivel_soiling.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.imagen_soiling.label_tag }}
+      {{ form.imagen_soiling|add_class:"form-control" }}
+      {{ form.imagen_soiling.errors }}
+    </div>
+
+    <h3>Fotos Adicionales</h3>
+    {% for i in 1|to:10 %}
+      <div class="form-group">
+        {{ form['foto_adicional_'|add:i].label_tag }}
+        {{ form['foto_adicional_'|add:i]|add_class:"form-control" }}
+        {{ form['foto_adicional_'|add:i].errors }}
+      </div>
     {% endfor %}
+
+    <div class="form-group">
+      {{ form.comentarios_supervisor.label_tag }}
+      {{ form.comentarios_supervisor|add_class:"form-control" }}
+      {{ form.comentarios_supervisor.errors }}
+    </div>
 
     <button type="submit" class="btn-primary">Generar Informe</button>
   </form>
