@@ -3,10 +3,11 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-test-key'
-DEBUG = True
+SECRET_KEY = 'tu-secret-key'
+DEBUG = False
+
 ALLOWED_HOSTS = [
-    'sistema-reportes-021i.onrender.com',
+    'sistema-reportes-021i.onrender.com',  # tu dominio de Render
     '127.0.0.1',
     'localhost',
 ]
@@ -16,9 +17,11 @@ INSTALLED_APPS = [
     'core',
 ]
 
-MIDDLEWARE = []
+MIDDLEWARE = [
+    # WhiteNoise debe ir antes de cualquier middleware que sirva archivos estáticos
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
 
-# --- Si no lo tenías, asegúrate de esto: ---
 ROOT_URLCONF = 'reportes.urls'
 
 TEMPLATES = [
@@ -34,21 +37,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'reportes.wsgi.application'
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-STATIC_URL = '/static/'
-
-# ——— Añadido para servir las imágenes subidas sin base de datos ———
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Evita la advertencia de clave automática 
+# ——— Base de datos SQLite interna ———
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Configuración de base de datos SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -56,3 +46,21 @@ DATABASES = {
     }
 }
 
+# ——— Archivos estáticos ———
+STATIC_URL = '/static/'
+
+# Le decimos a Django dónde están tus assets de desarrollo
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'core' / 'static',
+]
+
+# Carpeta donde collectstatic volcará los archivos en producción
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Almacenamiento optimizado de WhiteNoise (compressed + cache busting)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# ——— Media (uploads temporales) ———
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

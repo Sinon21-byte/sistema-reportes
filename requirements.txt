@@ -5,3 +5,5 @@ WeasyPrint>=60.0
 docxtpl
 python-docx
 Pillow
+whitenoise
+
