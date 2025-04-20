@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load form_tags %}
 
-{% block title %}Generar Reporte – Aediles{% endblock %}
-
 {% block content %}
   <h1>Generar Reporte</h1>
   <form method="post" enctype="multipart/form-data">
@@ -26,11 +24,18 @@
       {{ form.parque.errors }}
     </div>
 
+    <!-- NUEVO: destinatario opcional -->
+    <div class="form-group">
+      {{ form.destinatario.label_tag }}
+      {{ form.destinatario|add_class:"form-control" }}
+      {{ form.destinatario.errors }}
+    </div>
+
     <hr>
 
-    <!-- Inspecciones y Comentarios -->
+    <!-- Resto de campos… -->
     {% for field in form.visible_fields %}
-      {% if field.name not in 'fecha nombre parque' %}
+      {% if field.name not in 'fecha nombre parque destinatario' %}
         <div class="form-group">
           {{ field.label_tag }}
           {{ field|add_class:"form-control" }}
