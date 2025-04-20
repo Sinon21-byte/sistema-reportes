@@ -17,9 +17,9 @@ class ReporteForm(forms.Form):
     }))
 
     # Para cada inspección:
-    inspeccion_compacto = forms.ChoiceField(choices=OBS_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
-    comentario_compacto = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','rows':3}))
-    imagen_ecm = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={
+    inspeccion_compacto = forms.ChoiceField(label='Inspección ECM',choices=OBS_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
+    comentario_compacto = forms.CharField(label='Comentario ECM',required=False, widget=forms.Textarea(attrs={'class':'form-control','rows':3}))
+    imagen_ecm = forms.ImageField(label='Imagen ECM',required=False, widget=forms.ClearableFileInput(attrs={
         'class':'form-control','accept':'image/*','capture':'environment'
     }))
 
@@ -41,15 +41,15 @@ class ReporteForm(forms.Form):
         'class':'form-control','accept':'image/*','capture':'environment'
     }))
 
-    inspeccion_linea_mt = forms.ChoiceField(choices=OBS_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
-    comentario_linea_mt = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','rows':3}))
-    imagen_linea_mt = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={
+    inspeccion_linea_mt = forms.ChoiceField(label='Inspección LMT',choices=OBS_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
+    comentario_linea_mt = forms.CharField(label='Comentario LMT',required=False, widget=forms.Textarea(attrs={'class':'form-control','rows':3}))
+    imagen_linea_mt = forms.ImageField(label='Imagen LMT',required=False, widget=forms.ClearableFileInput(attrs={
         'class':'form-control','accept':'image/*','capture':'environment'
     }))
 
-    inspeccion_ct = forms.ChoiceField(choices=OBS_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
-    comentario_ct = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','rows':3}))
-    imagen_ct = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={
+    inspeccion_ct = forms.ChoiceField(label='Inspección CDT',choices=OBS_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
+    comentario_ct = forms.CharField(label='Comentarios CDT',required=False, widget=forms.Textarea(attrs={'class':'form-control','rows':3}))
+    imagen_ct = forms.ImageField(label='Imagen CDT',required=False, widget=forms.ClearableFileInput(attrs={
         'class':'form-control','accept':'image/*','capture':'environment'
     }))
 
