@@ -45,39 +45,39 @@ class ReporteForm(forms.Form):
         widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'})
     )
 
-   # Inspección reconectador
-inspeccion_reconectador = forms.ChoiceField(
-    label="Inspección LMT (verificar postes, conexiones, aisladors, roce con arboles)",
-    choices=OBS_CHOICES,
-    widget=forms.Select(attrs={'class': 'form-control'})
-)
-comentario_reconectador = forms.CharField(
-    label="Comentario",
-    required=False,
-    widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
-)
-imagen_reconectador = forms.ImageField(
-    label="Imagen LMT",
-    required=False,
-    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
-)
+    # Inspección reconectador
+    inspeccion_reconectador = forms.ChoiceField(
+        label="Inspección LMT (verificar postes, conexiones, aisladors, roce con arboles)",
+        choices=OBS_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    comentario_reconectador = forms.CharField(
+        label="Comentario",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+    )
+    imagen_reconectador = forms.ImageField(
+        label="Imagen LMT",
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
+    )
 
     # Inspección medidor de energía
-inspeccion_medidor = forms.ChoiceField(
-    label="Inspección Nivel De Vegetacion (En interior del parque, verificar canales de agua si aplica)",
-    choices=OBS_CHOICES,
-    widget=forms.Select(attrs={'class': 'form-control'})
-)
-comentario_medidor = forms.CharField(
-    label="Comentario",
-    required=False,
-    widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
-)
-imagen_medidor = forms.ImageField(
-    label="Imagen Nivel De Vegetacion",
-    required=False,
-    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
-)
+    inspeccion_medidor = forms.ChoiceField(
+        label="Inspección Nivel De Vegetacion (En interior del parque, verificar canales de agua si aplica)",
+        choices=OBS_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    comentario_medidor = forms.CharField(
+        label="Comentario",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+    )
+    imagen_medidor = forms.ImageField(
+        label="Imagen Nivel De Vegetacion",
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
+    )
 
     # Inspección sala de control
     inspeccion_sala_control = forms.ChoiceField(choices=OBS_CHOICES,
@@ -93,18 +93,16 @@ imagen_medidor = forms.ImageField(
         choices=OBS_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-
-comentario_linea_mt = forms.CharField(
-    label="Comentario",
-    required=False,
-    widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
-)
-imagen_linea_mt = forms.ImageField(
-    label="Imagen Cerco Perimetral",
-    required=False,
-    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
-)
-
+    comentario_linea_mt = forms.CharField(
+        label="Comentario",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+    )
+    imagen_linea_mt = forms.ImageField(
+        label="Imagen Cerco Perimetral",
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
+    )
 
     # Inspección transformador MT
     inspeccion_ct = forms.ChoiceField(label='Inspección CDT',
@@ -123,22 +121,22 @@ imagen_linea_mt = forms.ImageField(
     imagen_inversores = forms.ImageField(required=False,
         widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
 
-   # Inspección módulos
-inspeccion_modulos = forms.ChoiceField(
-    label="Inspección De Trackers",
-    choices=OBS_CHOICES,
-    widget=forms.Select(attrs={'class': 'form-control'})
-)
-comentario_modulos = forms.CharField(
-    label="Comentario",
-    required=False,
-    widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
-)
-imagen_modulos = forms.ImageField(
-    label="Imagen Trackers",
-    required=False,
-    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
-)
+    # Inspección módulos
+    inspeccion_modulos = forms.ChoiceField(
+        label="Inspección De Trackers",
+        choices=OBS_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    comentario_modulos = forms.CharField(
+        label="Comentario",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+    )
+    imagen_modulos = forms.ImageField(
+        label="Imagen Trackers",
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
+    )
 
     # Nivel de soiling
     nivel_soiling = forms.ChoiceField(
