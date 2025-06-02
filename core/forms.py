@@ -30,7 +30,7 @@ class ReporteForm(forms.Form):
 
     # Inspección equipo compacto de medida
     inspeccion_compacto = forms.ChoiceField(
-        label='Inspección ECM',
+        label='Inspección POI',
         choices=OBS_CHOICES,
         widget=forms.Select(attrs={'class':'form-control'})
     )
