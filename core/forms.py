@@ -88,11 +88,12 @@ imagen_medidor = forms.ImageField(
         widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
 
     # Inspección línea eléctrica MT
-inspeccion_linea_mt = forms.ChoiceField(
-    label="Inspección Cerco Perimetral (Considerar cerco electrico)",
-    choices=OBS_CHOICES,
-    widget=forms.Select(attrs={'class': 'form-control'})
-)
+    inspeccion_linea_mt = forms.ChoiceField(
+        label="Inspección Cerco Perimetral (Considerar cerco electrico)",
+        choices=OBS_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
 comentario_linea_mt = forms.CharField(
     label="Comentario",
     required=False,
