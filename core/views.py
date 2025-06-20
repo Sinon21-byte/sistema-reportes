@@ -8,25 +8,7 @@ from django.core.mail import EmailMessage
 from io import BytesIO
 from PIL import Image
 
-def login_view(request):
-    """Simple login page using credentials from settings."""
-    error = False
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        if username == settings.USUARIO_WEB and password == settings.PASSWORD_WEB:
-            request.session['authenticated'] = True
-            request.session['usuario'] = username
-            return redirect('formulario')
-        error = True
-    return render(request, 'core/login.html', {
-        'error': error,
-        'nombre': request.session.get('usuario')
-    })
-
 def formulario_view(request):
-    if not request.session.get('authenticated'):
-        return redirect('login')
     if request.method == 'POST':
         form = ReporteForm(request.POST, request.FILES)
         if form.is_valid():
@@ -123,5 +105,4 @@ def formulario_view(request):
     return render(request, 'core/formulario.html', {
         'form': form,
         'mensaje_exito': mensaje_exito,
-        'nombre': request.session.get('usuario'),
     })
