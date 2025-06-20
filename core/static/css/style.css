@@ -132,10 +132,3 @@ hr {
   max-width: 90%;
   text-align: center;
 }
-
-/* —— Mensajes de error —— */
-.error-message {
-  color: red;
-  text-align: center;
-  margin-bottom: 1rem;
-}
