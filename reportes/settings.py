@@ -4,6 +4,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'tu-secret-key')
+USUARIO_WEB = os.environ.get('Usuario_Web', 'usuario')
+PASSWORD_WEB = os.environ.get('Password_Web', 'password')
 DEBUG = False
 
 ALLOWED_HOSTS = [
@@ -14,10 +16,12 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
+    'django.contrib.sessions',
     'core',
 ]
 
 MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 

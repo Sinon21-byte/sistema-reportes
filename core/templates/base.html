@@ -16,9 +16,11 @@
       <nav class="main-nav">
         <a href="#" class="active">Inicio</a>
       </nav>
+      {% if nombre %}
       <div class="user-info">
         Bienvenido(a), {{ nombre }}
       </div>
+      {% endif %}
     </div>
   </header>
 
