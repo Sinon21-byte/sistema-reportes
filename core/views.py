@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import ReporteForm
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
@@ -95,15 +95,14 @@ def formulario_view(request):
                 except:
                     pass
 
-            # Siempre devolver el archivo
-            resp = HttpResponse(
-                data,
-                content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            )
-            resp['Content-Disposition'] = f'attachment; filename="informe_{cd["parque"]}.docx"'
-            return resp
+            # Redirigir para evitar reenvío al refrescar
+            return redirect(f"{reverse('formulario')}?success=1")
 
     else:
         form = ReporteForm()
 
-    return render(request, 'core/formulario.html', {'form': form})
+    mensaje_exito = request.GET.get('success') == '1'
+    return render(request, 'core/formulario.html', {
+        'form': form,
+        'mensaje_exito': mensaje_exito,
+    })
