@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from .forms import ReporteForm
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
@@ -77,7 +78,6 @@ def formulario_view(request):
 
             # Email condicional
             dest = cd.get('destinatario')
-            enviado = False
             if dest:
                 try:
                     mail = EmailMessage(
@@ -92,12 +92,16 @@ def formulario_view(request):
                         mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                     )
                     mail.send(fail_silently=True)
-                    enviado = True
                 except:
                     pass
 
-            form = ReporteForm()
-            return render(request, 'core/formulario.html', {'form': form, 'enviado': enviado})
+            # Siempre devolver el archivo
+            resp = HttpResponse(
+                data,
+                content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            )
+            resp['Content-Disposition'] = f'attachment; filename="informe_{cd["parque"]}.docx"'
+            return resp
 
     else:
         form = ReporteForm()
