@@ -234,19 +234,4 @@
 
     <button type="submit" class="btn-primary">Generar Informe</button>
   </form>
-
-  {% if mensaje_exito %}
-  <div id="popup-overlay" class="popup-overlay">
-    <div class="popup">
-      <p>Informe enviado con éxito</p>
-      <button id="popup-close" class="btn-primary">Cerrar</button>
-    </div>
-  </div>
-  <script>
-    document.getElementById('popup-overlay').style.display = 'flex';
-    document.getElementById('popup-close').addEventListener('click', function(){
-      document.getElementById('popup-overlay').style.display = 'none';
-    });
-  </script>
-  {% endif %}
 {% endblock %}
