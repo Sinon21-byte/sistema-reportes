@@ -5,8 +5,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    # Tu formulario en la raíz
-    path('', views.formulario_view, name='formulario'),
+    path('', views.login_view, name='login'),
+    path('formulario/', views.formulario_view, name='formulario'),
 ]
 
 # Esto sirve MEDIA_URL durante el DEBUG para que InlineImage funcione

@@ -4,6 +4,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'tu-secret-key')
+USUARIO_WEB = os.environ.get('Usuario_Web', 'usuario')
+PASSWORD_WEB = os.environ.get('Password_Web', 'password')
 DEBUG = False
 
 ALLOWED_HOSTS = [
