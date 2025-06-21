@@ -13,6 +13,7 @@
       <a href="#" class="logo">
         <img src="{% static 'images/aediles_logo.png' %}" alt="Aediles" height="40">
       </a>
+        {% if nombre %}
         <nav class="main-nav">
           <a href="{% url 'formulario' %}" class="{% if active_tab == 'formulario' %}active{% endif %}">Inspección Rutinaria</a>
           <a href="{% url 'actividades' %}" class="{% if active_tab == 'actividades' %}active{% endif %}">Reporte Actividades</a>
@@ -21,11 +22,10 @@
           <option value="{% url 'formulario' %}" {% if active_tab == 'formulario' %}selected{% endif %}>Inspección Rutinaria</option>
           <option value="{% url 'actividades' %}" {% if active_tab == 'actividades' %}selected{% endif %}>Reporte Actividades</option>
         </select>
-      {% if nombre %}
-      <div class="user-info">
-        Bienvenido(a), {{ nombre }}
-      </div>
-      {% endif %}
+        <div class="user-info">
+          Bienvenido(a), {{ nombre }}
+        </div>
+        {% endif %}
     </div>
   </header>
 
