@@ -11,6 +11,10 @@ from PIL import Image
 def login_view(request):
     """Simple login page using credentials from settings."""
     error = False
+    if request.method == 'GET':
+        # Clear any existing session so the navigation
+        # menu remains hidden on the login page
+        request.session.flush()
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
