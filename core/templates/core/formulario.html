@@ -2,10 +2,10 @@
 {% load static %}
 {% load form_tags %}
 
-{% block title %}Generar Reporte – Aediles{% endblock %}
+{% block title %}Inspección Rutinaria – Aediles{% endblock %}
 
 {% block content %}
-  <h1>Generar Reporte</h1>
+  <h1>Inspección Rutinaria</h1>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.non_field_errors }}
