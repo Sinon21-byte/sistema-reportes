@@ -172,3 +172,53 @@ class ReporteForm(forms.Form):
     # Comentarios supervisor
     comentarios_supervisor = forms.CharField(required=False,
         widget=forms.Textarea(attrs={'class':'form-control','rows':4}))
+
+class ReporteActividadesForm(forms.Form):
+    # Metadatos
+    fecha = forms.DateField(widget=forms.DateInput(attrs={
+        'type': 'date',
+        'class': 'form-control',
+    }))
+    nombre = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+    parque = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+
+    destinatario = forms.EmailField(
+        required=False,
+        label='Enviar copia a (email)',
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'ejemplo@dominio.com'
+        })
+    )
+
+    resumen = forms.CharField(
+        label='Resumen de Actividades',
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
+    )
+
+    # Registro fotográfico 1–10
+    foto_adicional_1 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_2 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_3 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_4 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_5 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_6 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_7 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_8 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_9 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+    foto_adicional_10 = forms.ImageField(required=False,
+        widget=forms.ClearableFileInput(attrs={'class':'form-control','accept':'image/*'}))
+
