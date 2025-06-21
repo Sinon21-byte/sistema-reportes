@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import ReporteForm, ActividadesForm
+from .forms import ReporteForm
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
 from django.conf import settings
@@ -130,83 +130,4 @@ def formulario_view(request):
         'form': form,
         'mensaje_exito': mensaje_exito,
         'nombre': nombre,
-        'active_tab': 'formulario',
-    })
-
-
-def actividades_view(request):
-    """Vista para generar el reporte de actividades"""
-    if not request.session.get('authenticated'):
-        return redirect('login')
-
-    nombre = request.session.get('usuario')
-
-    if request.method == 'POST':
-        form = ActividadesForm(request.POST, request.FILES)
-        if form.is_valid():
-            cd = form.cleaned_data
-
-            tpl = settings.BASE_DIR / 'core' / 'plantillas' / 'reporte2.docx'
-            doc = DocxTemplate(tpl)
-
-            context = {
-                'fecha': cd['fecha'],
-                'nombre': cd['nombre'],
-                'parque': cd['parque'],
-                'resumen': cd.get('resumen', ''),
-            }
-
-            def mkimg(name):
-                f = cd.get(name)
-                if not f:
-                    return None
-                img = Image.open(f)
-                img.thumbnail((int(120*11.8), int(105*11.8)))
-                bio = BytesIO()
-                img.save(bio, format=img.format or 'PNG')
-                bio.seek(0)
-                return InlineImage(doc, bio, width=Mm(120), height=Mm(105))
-
-            photos = []
-            for i in range(1,11):
-                img = mkimg(f'registro_fotografico_{i}')
-                if img:
-                    photos.append(img)
-            context['foto_adicional'] = photos
-
-            doc.render(context)
-            buf = BytesIO(); doc.save(buf); buf.seek(0)
-            data = buf.getvalue()
-
-            dest = cd.get('destinatario')
-            if dest:
-                try:
-                    mail = EmailMessage(
-                        subject=f"Reporte actividades {cd['parque']} realizado por {cd['nombre']}",
-                        body="Reporte adjunto",
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        to=[dest],
-                    )
-                    mail.attach(
-                        filename=f"reporte_actividades_{cd['parque']}.docx",
-                        content=data,
-                        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    )
-                    mail.send(fail_silently=True)
-                except:
-                    pass
-
-            return redirect(f"{reverse('actividades')}?success=1")
-    else:
-        form = ActividadesForm()
-
-    mensaje_exito = request.GET.get('success') == '1'
-    if mensaje_exito:
-        request.session.flush()
-
-    return render(request, 'core/reporte_actividades.html', {
-        'form': form,
-        'mensaje_exito': mensaje_exito,
-        'nombre': nombre,
-        'active_tab': 'actividades',
     })
