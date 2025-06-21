@@ -47,6 +47,24 @@ body {
 .main-nav a.active {
   background: var(--color-secondary);
 }
+.nav-select {
+  display: none;
+  margin-left: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+}
+.nav-select option {
+  color: var(--color-text);
+}
+.nav-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,72,130,0.2);
+}
 .user-info {
   color: #fff;
   font-size: 0.9rem;
@@ -138,4 +156,19 @@ hr {
   color: red;
   text-align: center;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .main-nav {
+    display: none;
+  }
+  .nav-select {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0 0;
+  }
+  .header-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
