@@ -47,16 +47,6 @@ body {
 .main-nav a.active {
   background: var(--color-secondary);
 }
-.nav-select {
-  display: none;
-  margin-left: 1rem;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 1rem;
-}
-.nav-select:focus {
-  outline: none;
-}
 .user-info {
   color: #fff;
   font-size: 0.9rem;
@@ -148,16 +138,4 @@ hr {
   color: red;
   text-align: center;
   margin-bottom: 1rem;
-}
-
-@media (max-width: 600px) {
-  .main-nav {
-    display: none;
-  }
-  .nav-select {
-    display: block;
-  }
-  .header-container {
-    flex-wrap: wrap;
-  }
 }
