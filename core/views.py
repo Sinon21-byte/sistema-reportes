@@ -27,9 +27,6 @@ def login_view(request):
 def formulario_view(request):
     if not request.session.get('authenticated'):
         return redirect('login')
-
-    nombre = request.session.get('usuario')
-
     if request.method == 'POST':
         form = ReporteForm(request.POST, request.FILES)
         if form.is_valid():
@@ -123,11 +120,8 @@ def formulario_view(request):
         form = ReporteForm()
 
     mensaje_exito = request.GET.get('success') == '1'
-    if mensaje_exito:
-        request.session.flush()
-
     return render(request, 'core/formulario.html', {
         'form': form,
         'mensaje_exito': mensaje_exito,
-        'nombre': nombre,
+        'nombre': request.session.get('usuario'),
     })
