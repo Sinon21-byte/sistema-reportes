@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.login_view, name='login'),
     path('formulario/', views.formulario_view, name='formulario'),
+    path('actividades/', views.actividades_view, name='actividades'),
 ]
 
 # Esto sirve MEDIA_URL durante el DEBUG para que InlineImage funcione
