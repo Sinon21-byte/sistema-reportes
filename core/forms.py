@@ -17,6 +17,13 @@ class ReporteForm(forms.Form):
     parque = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
         'class': 'form-control',
     }))
+    nombre_archivo = forms.CharField(
+        label='Nombre del documento',
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+        })
+    )
 
     # Nuevo: destinatario opcional
     destinatario = forms.EmailField(
@@ -187,6 +194,13 @@ class ActividadesForm(forms.Form):
     parque = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
         'class': 'form-control',
     }))
+    nombre_archivo = forms.CharField(
+        label='Nombre del documento',
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+        })
+    )
 
     destinatario = forms.EmailField(
         required=False,
