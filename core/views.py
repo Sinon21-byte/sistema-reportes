@@ -111,8 +111,9 @@ def formulario_view(request):
                         from_email=settings.DEFAULT_FROM_EMAIL,
                         to=[dest],
                     )
+                    file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
                     mail.attach(
-                        filename=f"informe_{cd['parque']}.docx",
+                        filename=file_name,
                         content=data,
                         mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                     )
@@ -191,8 +192,9 @@ def actividades_view(request):
                         from_email=settings.DEFAULT_FROM_EMAIL,
                         to=[dest],
                     )
+                    file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
                     mail.attach(
-                        filename=f"reporte_actividades_{cd['parque']}.docx",
+                        filename=file_name,
                         content=data,
                         mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                     )

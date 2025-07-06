@@ -26,6 +26,11 @@
       {{ form.parque.errors }}
     </div>
     <div class="form-group">
+      {{ form.nombre_archivo.label_tag }}
+      {{ form.nombre_archivo|add_class:"form-control" }}
+      {{ form.nombre_archivo.errors }}
+    </div>
+    <div class="form-group">
       {{ form.destinatario.label_tag }}
       {{ form.destinatario|add_class:"form-control" }}
       {{ form.destinatario.errors }}
