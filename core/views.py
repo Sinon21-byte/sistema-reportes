@@ -5,8 +5,31 @@ from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
 from django.conf import settings
 from django.core.mail import EmailMessage
+import logging
 from io import BytesIO
 from PIL import Image
+import threading
+
+logger = logging.getLogger(__name__)
+
+
+def send_report_email(subject, body, from_email, to, attachment):
+    try:
+        mail = EmailMessage(
+            subject=subject,
+            body=body,
+            from_email=from_email,
+            to=to,
+        )
+        mail.attach(
+            filename=attachment["filename"],
+            content=attachment["content"],
+            mimetype=attachment["mimetype"],
+        )
+        mail.send(fail_silently=False)
+        logger.info("Reporte enviado por correo a %s.", ", ".join(to))
+    except Exception:
+        logger.exception("Error al enviar el reporte por correo a %s.", ", ".join(to))
 
 def login_view(request):
     """Simple login page using credentials from settings."""
@@ -104,22 +127,24 @@ def formulario_view(request):
             # Email condicional
             dest = cd.get('destinatario')
             if dest:
-                try:
-                    mail = EmailMessage(
-                        subject=f"Reporte inspección {cd['parque']} realizado por {cd['nombre']}",
-                        body="Reporte adjunto",
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        to=[dest],
-                    )
-                    file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
-                    mail.attach(
-                        filename=file_name,
-                        content=data,
-                        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    )
-                    mail.send(fail_silently=True)
-                except:
-                    pass
+                file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
+                attachment = {
+                    "filename": file_name,
+                    "content": data,
+                    "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                }
+                thread = threading.Thread(
+                    target=send_report_email,
+                    args=(
+                        f"Reporte inspección {cd['parque']} realizado por {cd['nombre']}",
+                        "Reporte adjunto",
+                        settings.DEFAULT_FROM_EMAIL,
+                        [dest],
+                        attachment,
+                    ),
+                    daemon=True,
+                )
+                thread.start()
 
             # Redirigir para evitar reenvío al refrescar
             return redirect(f"{reverse('formulario')}?success=1")
@@ -185,22 +210,24 @@ def actividades_view(request):
 
             dest = cd.get('destinatario')
             if dest:
-                try:
-                    mail = EmailMessage(
-                        subject=f"Reporte actividades {cd['parque']} realizado por {cd['nombre']}",
-                        body="Reporte adjunto",
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        to=[dest],
-                    )
-                    file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
-                    mail.attach(
-                        filename=file_name,
-                        content=data,
-                        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    )
-                    mail.send(fail_silently=True)
-                except:
-                    pass
+                file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
+                attachment = {
+                    "filename": file_name,
+                    "content": data,
+                    "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                }
+                thread = threading.Thread(
+                    target=send_report_email,
+                    args=(
+                        f"Reporte actividades {cd['parque']} realizado por {cd['nombre']}",
+                        "Reporte adjunto",
+                        settings.DEFAULT_FROM_EMAIL,
+                        [dest],
+                        attachment,
+                    ),
+                    daemon=True,
+                )
+                thread.start()
 
             return redirect(f"{reverse('actividades')}?success=1")
     else:
