@@ -104,22 +104,19 @@ def formulario_view(request):
             # Email condicional
             dest = cd.get('destinatario')
             if dest:
-                try:
-                    mail = EmailMessage(
-                        subject=f"Reporte inspección {cd['parque']} realizado por {cd['nombre']}",
-                        body="Reporte adjunto",
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        to=[dest],
-                    )
-                    file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
-                    mail.attach(
-                        filename=file_name,
-                        content=data,
-                        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    )
-                    mail.send(fail_silently=True)
-                except:
-                    pass
+                mail = EmailMessage(
+                    subject=f"Reporte inspección {cd['parque']} realizado por {cd['nombre']}",
+                    body="Reporte adjunto",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[dest],
+                )
+                file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
+                mail.attach(
+                    filename=file_name,
+                    content=data,
+                    mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                )
+                mail.send(fail_silently=False)
 
             # Redirigir para evitar reenvío al refrescar
             return redirect(f"{reverse('formulario')}?success=1")
@@ -185,22 +182,19 @@ def actividades_view(request):
 
             dest = cd.get('destinatario')
             if dest:
-                try:
-                    mail = EmailMessage(
-                        subject=f"Reporte actividades {cd['parque']} realizado por {cd['nombre']}",
-                        body="Reporte adjunto",
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        to=[dest],
-                    )
-                    file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
-                    mail.attach(
-                        filename=file_name,
-                        content=data,
-                        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    )
-                    mail.send(fail_silently=True)
-                except:
-                    pass
+                mail = EmailMessage(
+                    subject=f"Reporte actividades {cd['parque']} realizado por {cd['nombre']}",
+                    body="Reporte adjunto",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[dest],
+                )
+                file_name = f"{cd['fecha'].strftime('%y-%m-%d')}_{cd['parque']}_{cd['nombre_archivo']}.docx"
+                mail.attach(
+                    filename=file_name,
+                    content=data,
+                    mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                )
+                mail.send(fail_silently=False)
 
             return redirect(f"{reverse('actividades')}?success=1")
     else:
