@@ -5,6 +5,7 @@ from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
 from django.conf import settings
 from django.core.mail import EmailMessage
+from .email_utils import send_email_async
 from io import BytesIO
 from PIL import Image
 
@@ -116,7 +117,7 @@ def formulario_view(request):
                     content=data,
                     mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                 )
-                mail.send(fail_silently=False)
+                send_email_async(mail)
 
             # Redirigir para evitar reenvío al refrescar
             return redirect(f"{reverse('formulario')}?success=1")
@@ -194,7 +195,7 @@ def actividades_view(request):
                     content=data,
                     mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                 )
-                mail.send(fail_silently=False)
+                send_email_async(mail)
 
             return redirect(f"{reverse('actividades')}?success=1")
     else:
