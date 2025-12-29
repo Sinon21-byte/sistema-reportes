@@ -3,7 +3,6 @@ import threading
 
 logger = logging.getLogger(__name__)
 
-
 def send_email_async(message):
     def _send():
         try:
