@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import ReporteForm, ActividadesForm
-from docxtpl import DocxTemplate, InlineImage
-from docx.shared import Mm
 from django.conf import settings
 from django.core.mail import EmailMessage
 from .email_utils import send_email_async
@@ -40,12 +38,15 @@ def formulario_view(request):
         if form.is_valid():
             cd = form.cleaned_data
 
-            # Plantilla
-            tpl = settings.BASE_DIR / 'core' / 'plantillas' / 'reporte.docx'
-            doc = DocxTemplate(tpl)
+            def read_file(name):
+                f = cd.get(name)
+                if not f:
+                    return None
+                content = f.read()
+                f.seek(0)
+                return content
 
-            # Contexto de textos
-            context = {
+            report_data = {
                 'fecha': cd['fecha'],
                 'nombre': cd['nombre'],
                 'parque': cd['parque'],
@@ -67,22 +68,11 @@ def formulario_view(request):
                 'comentario_modulos': cd.get('comentario_modulos', ''),
                 'nivel_soiling': cd['nivel_soiling'],
                 'comentarios_supervisor': cd.get('comentarios_supervisor', ''),
+                'destinatario': cd.get('destinatario'),
+                'nombre_archivo': cd['nombre_archivo'],
             }
 
-            # Función helper
-            def mkimg(name):
-                f = cd.get(name)
-                if not f:
-                    return None
-                img = Image.open(f)
-                img.thumbnail((int(120*11.8), int(105*11.8)))
-                bio = BytesIO()
-                img.save(bio, format=img.format or 'PNG')
-                bio.seek(0)
-                return InlineImage(doc, bio, width=Mm(120), height=Mm(105))
-
-            # Insertar imágenes
-            for key in [
+            image_keys = [
                 'imagen_ecm', 'imagen_reconectador', 'imagen_medidor',
                 'imagen_sala_control', 'imagen_linea_mt', 'imagen_ct',
                 'imagen_inversores', 'imagen_modulos', 'imagen_soiling'
@@ -149,14 +139,21 @@ def actividades_view(request):
         if form.is_valid():
             cd = form.cleaned_data
 
-            tpl = settings.BASE_DIR / 'core' / 'plantillas' / 'reporte2.docx'
-            doc = DocxTemplate(tpl)
+            def read_file(name):
+                f = cd.get(name)
+                if not f:
+                    return None
+                content = f.read()
+                f.seek(0)
+                return content
 
-            context = {
+            report_data = {
                 'fecha': cd['fecha'],
                 'nombre': cd['nombre'],
                 'parque': cd['parque'],
                 'resumen': cd.get('resumen', ''),
+                'destinatario': cd.get('destinatario'),
+                'nombre_archivo': cd['nombre_archivo'],
             }
 
             def mkimg(name):
