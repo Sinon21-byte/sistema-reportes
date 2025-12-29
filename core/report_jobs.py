@@ -8,7 +8,7 @@ from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
 from PIL import Image
 
-from .email_utils import send_email_with_logging
+from .email_utils import send_email_async
 
 logger = logging.getLogger(__name__)
 
@@ -154,4 +154,4 @@ def _send_report_email(subject, file_name, dest, doc_bytes):
         content=doc_bytes,
         mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     )
-    send_email_with_logging(mail)
+    send_email_async(mail)
